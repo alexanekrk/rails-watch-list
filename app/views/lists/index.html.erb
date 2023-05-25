@@ -1,7 +1,6 @@
 <h1>Save any kind of movies</h1>
 
 
-<%# <%= raise %>
 <% @lists.each do |list| %>
   <li><%= link_to list.name, list_path(list)%></li>
 <% end %>
