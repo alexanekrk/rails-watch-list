@@ -1,17 +1,30 @@
-<h1><%= @list.name %></h1>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1756&q=80);">
+  <div class="container">
+    <h1><%= @list.name %></h1>
+    <br>
+     <%= link_to "Add a movie", new_list_bookmark_path(@list), class:"btn btn-primary" %>
+  </div>
+</div>
 
-<ul>
-<% @bookmarks.each do |bookmark| %>
-  <li><h4><%= link_to bookmark.movie.title, bookmark.movie.poster_url %></h4>
-  <%= bookmark.movie.overview %>
-  <p><%= bookmark.movie.rating %></p></li>
-  <%= link_to 'Delete',
-      list_path(@list),
-      data: {turbo_method: :delete, turbo_confirm: 'Sure?'} %>
-<% end %>
 
-</ul>
-
-<%= link_to "Add a movie", new_list_bookmark_path(@list) %>
-
-<%= link_to "Back to all lists", lists_path(@list) %>
+<div class="container m-3">
+  <% if @bookmarks.length == 0 %>
+    <%= 'No movie yet' %>
+  <% else %>
+    <div class="cards">
+    <% @bookmarks.each do |bookmark| %>
+    <div class="card d-flex justify-content-around m-3" style="width: 18rem;">
+      <%= image_tag bookmark.movie.poster_url, class: "card-img-top"%>
+      <div class="card-body">
+        <h5 class="card-title"><%= bookmark.movie.title %></h5>
+        <p class="card-text"><%= bookmark.movie.overview %></p>
+        <p class="card-text"><p><%= bookmark.movie.rating %>/10</p>
+        <%= link_to 'Delete',
+            bookmark_path(bookmark),
+            data: {turbo_method: :delete, turbo_confirm: 'Sure?'}, class:'btn btn-danger' %>
+      </div>
+    </div>
+    <% end %>
+  <% end %>
+  </div>
+</div>
